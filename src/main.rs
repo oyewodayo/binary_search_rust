@@ -1,28 +1,30 @@
 use std::cmp::Ordering;
 
 pub fn binary_search<T: Ord>(array: &[T], item: &T) -> Option<usize> {
+    //Note: The array must be sorted first to be able to apply binary search.
     let mut is_asc = true;
     if array.len() >1 {
         is_asc = array[0] < array[(array.len() - 1)];
     }
-   /*
+    /*
         - Get the first item position on the array to search 
         - Get the position of the last item on the array to search
-   */
+    */
     let mut left = 0;
     let mut right = array.len();
 
-     /*
+    /*
         - Split the array into two and get the mid point of the array
         - Identify the position of the midpoint value of the array
-   */
+    */
     while left < right {
         let mid = (left + (right -left))/2;
+        // let mid = (left + right)/2; Same as above
 
         if is_asc {
             match item.cmp(&array[mid]) {
                 Ordering::Less => right = mid,
-                Ordering::Equal => return Some(mid),
+                Ordering::Equal => return Some(mid),//This checks if the middle element is equal to the target
                 Ordering::Greater => left = mid+1,
             }
         }
